@@ -1,0 +1,51 @@
+[
+    {
+        "serial_no":0,
+        "name":"cave floor",
+        "block_path": false,
+        "art": "art\\cave_floor.png"
+    },
+    {
+        "serial_no":1,
+        "name":"cave wall",
+        "block_path": true,
+        "art":"art\\cave_wall.png"
+    },
+    {
+        "serial_no":2,
+        "name":"cave wall",
+        "block_path": true,
+        "art":"art\\cave_wall_1.png"
+    },
+    {
+        "serial_no":3,
+        "name":"cave wall",
+        "block_path": true,
+        "art":"art\\cave_wall_2.png"
+    },
+    {
+        "serial_no":4,
+        "name":"cave wall",
+        "block_path": true,
+        "art":"art\\cave_wall_3.png"
+    },
+    {
+        "serial_no":5,
+        "name":"dirt floor",
+        "block_path": false,
+        "art": "art\\dirt_floor.png"
+    },
+    {
+        "serial_no":6,
+        "name":"grass floor",
+        "block_path": false,
+        "art": "art\\grass_floor.png"
+    },
+    {
+        "serial_no":7,
+        "name":"lava floor",
+        "block_path": true,
+        "art": "art\\lava_floor.png"
+    }
+    
+]

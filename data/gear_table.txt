@@ -1,0 +1,34 @@
+[
+    {
+	"base":"sword",
+	"rarity":"30"
+    },
+    {
+	"base":"helmet",
+	"rarity":"30"
+    },
+    {
+	"base":"belt",
+	"rarity":"30"
+    },
+    {
+	"base":"boots",
+	"rarity":"30"
+    },
+    {
+	"base":"gloves",
+	"rarity":"30"
+    },
+    {
+	"base":"shoulders",
+	"rarity":"30"
+    },
+    {
+	"base":"bracers",
+	"rarity":"30"
+    },
+    {
+	"base":"nothing",
+	"rarity":"20"
+    }
+]

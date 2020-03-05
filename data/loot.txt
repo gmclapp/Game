@@ -1,0 +1,117 @@
+[
+    {
+
+	"name":"gold coin",
+	"mass":"0.03",
+	"volume":"0.0000016",
+	"art": "art\\gold_coin.png"
+
+    },
+    {
+
+	"name":"silver coin",
+	"mass":"0.015",
+	"volume":"0.0000016",
+	"art": "art\\silver_coin.png"
+
+    },
+    {
+
+	"name":"bronze coin",
+	"mass":"0.012",
+	"volume":"0.0000016",
+	"art": "art\\bronze_coin.png"
+
+    },
+    {
+
+	"name":"sword",
+	"mass":"1.5",
+	"volume":"0.00025",
+	"art": "art\\sword.png",
+	"implicit":"attack",
+	"tier":{
+		    "1":"11-15",
+		    "2":"6-10",
+		    "3":"1-5"
+		}
+    },
+    {
+
+	"name":"helmet",
+	"mass":"1.5",
+	"volume":"0.00025",
+	"art": "art\\helmet.png",
+	"implicit":"defense",
+	"tier":{
+		    "1":"11-15",
+		    "2":"6-10",
+		    "3":"1-5"
+		}
+    },
+    {
+
+	"name":"boots",
+	"mass":"1.5",
+	"volume":"0.00025",
+	"art": "art\\boots.png",
+	"implicit":"defense",
+	"tier":{
+		    "1":"11-15",
+		    "2":"6-10",
+		    "3":"1-5"
+		}
+    },
+    {
+
+	"name":"gloves",
+	"mass":"1.5",
+	"volume":"0.00025",
+	"art": "art\\gloves.png",
+	"implicit":"defense",
+	"tier":{
+		    "1":"11-15",
+		    "2":"6-10",
+		    "3":"1-5"
+		}
+    },
+    {
+
+	"name":"bracers",
+	"mass":"1.5",
+	"volume":"0.00025",
+	"art": "art\\bracers.png",
+	"implicit":"defense",
+	"tier":{
+		    "1":"11-15",
+		    "2":"6-10",
+		    "3":"1-5"
+		}
+    },
+    {
+
+	"name":"shoulders",
+	"mass":"1.5",
+	"volume":"0.00025",
+	"art": "art\\shoulders.png",
+	"implicit":"defense",
+	"tier":{
+		    "1":"11-15",
+		    "2":"6-10",
+		    "3":"1-5"
+		}
+    },
+    {
+
+	"name":"belt",
+	"mass":"1.5",
+	"volume":"0.00025",
+	"art": "art\\belt.png",
+	"implicit":"defense",
+	"tier":{
+		    "1":"11-15",
+		    "2":"6-10",
+		    "3":"1-5"
+		}
+    }
+]
