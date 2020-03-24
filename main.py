@@ -56,7 +56,6 @@ def handle_cheat_code():
             print(args)
     except IndexError:
         game_obj.log_message("No cheat code entered.")
-##        print("No cheat code entered.")
         
 def draw_game():
 

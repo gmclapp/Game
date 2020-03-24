@@ -234,12 +234,6 @@ class container(prop):
                 game_obj.vars["mouse_attachment"] = self.storage.inventory[slot_click]
                 self.storage.inventory.pop(slot_click)
         
-##
-##        if (dx**2 + dy**2 ) < (constants.RES/2)**2:
-##            self.clicked = True
-##        else:
-##            self.clicked = False
-
 class portal(prop):
     def __init__(self,x,y,scene,prop_type,state,dest_scene,dest_x,dest_y,sprite=None,player=False,ai=None):
         
@@ -290,7 +284,9 @@ class game_object():
                      "serial_number_counter":0,
                      "game_mode":"normal",
                      "mouse_attachment":None,
+##                     "mouse_attachment":component.storage(max_slots=1),
                      "messages":["Hello world."]}
+        self.player_inventory = component.storage(max_slots = 28)
         
 
     def load(self):
