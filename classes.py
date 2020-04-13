@@ -497,7 +497,7 @@ class art():
         self.art = art
         self.active = active
         
-class menu():
+class side_menu():
     def __init__(self,x,y,width,height):
         self.button_list = []
         self.art = []
@@ -527,6 +527,41 @@ class menu():
         gold_coin_anchor = (774,549)
         silver_coin_anchor = (774,584)
         bronze_coin_anchor = (774,618)
+
+        page_forward = button(constants.GAME_WIDTH-constants.PAGE_TURN_HITBOX,
+                              0,
+                              constants.PAGE_TURN_HITBOX,
+                              constants.PAGE_TURN_HITBOX,
+                              action=self.advance_page)
+
+        page_backward = button(constants.SCENE_WIDTH,
+                               0,
+                               constants.PAGE_TURN_HITBOX,
+                               constants.PAGE_TURN_HITBOX,
+                               action=self.return_page)
+        self.add_button(page_forward)
+        self.add_button(page_backward)
+
+        self.edit_mode_buttons = []
+    
+        with open("data\\tiles.txt","r") as f:
+            tile_list = json.load(f)
+            for i, t in enumerate(tile_list):
+                tile = struct_tile(i)
+                temp_x = constants.SCENE_WIDTH+10+(42*(i%6))
+                temp_y = constants.SIDE_HEADER_HEIGHT+42*int(i/6)
+                tile.set_xy(temp_x,temp_y)
+                new_button = button(temp_x,
+                                    temp_y,
+                                    32,32,
+                                    art = pygame.image.load(t["art"]),
+                                    action = tile.attach_to_mouse)
+                
+
+                new_button.deactivate()
+                self.add_button(new_button)
+                self.edit_mode_buttons.append(new_button)
+        
 
     def is_clicked(self,x,y):
         if (self.x < x < self.x+self.width) and (self.y < y < self.y+self.height):

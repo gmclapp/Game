@@ -226,47 +226,11 @@ def game_initialize():
     game_obj.actor_list.append(actor(1,1,0,constants.S_PLAYER,player=True,name="Player",storage=component.storage()))
     game_obj.actor_list.append(actor(15,15,0,constants.S_ENEMY,player=False,ai=component.simple_ai(),name="Enemy"))
 
-    game_obj.side_menu = menu(constants.SCENE_WIDTH,0,constants.SIDE_BAR_WIDTH,constants.GAME_HEIGHT)
+    game_obj.side_menu = side_menu(constants.SCENE_WIDTH,0,constants.SIDE_BAR_WIDTH,constants.GAME_HEIGHT)
 
     # Tell the following modules about game_obj
     component.initialize(game_obj)
-    init_classes(game_obj)
-
-    page_forward = button(constants.GAME_WIDTH-constants.PAGE_TURN_HITBOX,
-                          0,
-                          constants.PAGE_TURN_HITBOX,
-                          constants.PAGE_TURN_HITBOX,
-                          action=game_obj.side_menu.advance_page)
-    
-    page_backward = button(constants.SCENE_WIDTH,
-                           0,
-                           constants.PAGE_TURN_HITBOX,
-                           constants.PAGE_TURN_HITBOX,
-                           action=game_obj.side_menu.return_page)
-
-    game_obj.side_menu.add_button(page_forward)
-    game_obj.side_menu.add_button(page_backward)
-
-    game_obj.side_menu.edit_mode_buttons = []
-    
-    with open("data\\tiles.txt","r") as f:
-        tile_list = json.load(f)
-        for i, t in enumerate(tile_list):
-            tile = struct_tile(i)
-            temp_x = constants.SCENE_WIDTH+10+(42*(i%6))
-            temp_y = constants.SIDE_HEADER_HEIGHT+42*int(i/6)
-            tile.set_xy(temp_x,temp_y)
-            new_button = button(temp_x,
-                                temp_y,
-                                32,32,
-                                art = pygame.image.load(t["art"]),
-                                action = tile.attach_to_mouse)
-            
-
-            new_button.deactivate()
-            game_obj.side_menu.add_button(new_button)
-            game_obj.side_menu.edit_mode_buttons.append(new_button)
-        
+    init_classes(game_obj) 
                                                                                                                 
     game_obj.get_props()
     
