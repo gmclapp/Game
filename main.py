@@ -103,11 +103,9 @@ def draw_game():
         game_obj.SURFACE_MAIN.blit(debug_text,(0,0))
 
     # Draw the mouse attachment if there is one.
-    if game_obj.vars["mouse_attachment"]:
-##        game_obj.SURFACE_MAIN.blit(game_obj.vars["mouse_attachment"].sprite,(game_obj.vars["mouse_attachment"].x,
-##                                                                             game_obj.vars["mouse_attachment"].y))
-##        
+    if game_obj.vars["mouse_attachment"]:      
         game_obj.vars["mouse_attachment"].draw(game_obj.SURFACE_MAIN)
+
     # Flip the display to show the next frame
     pygame.display.flip()
 
