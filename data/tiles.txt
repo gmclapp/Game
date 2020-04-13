@@ -12,24 +12,6 @@
         "art":"art\\cave_wall.png"
     },
     {
-        "serial_no":2,
-        "name":"cave wall",
-        "block_path": true,
-        "art":"art\\cave_wall_1.png"
-    },
-    {
-        "serial_no":3,
-        "name":"cave wall",
-        "block_path": true,
-        "art":"art\\cave_wall_2.png"
-    },
-    {
-        "serial_no":4,
-        "name":"cave wall",
-        "block_path": true,
-        "art":"art\\cave_wall_3.png"
-    },
-    {
         "serial_no":5,
         "name":"dirt floor",
         "block_path": false,
