@@ -38,12 +38,22 @@ class loot_table():
         print("Invalid roll!")
 
 class scene():
-    def __init__(self):
-        pass
+    def __init__(self,num,data):
+        self.num = num
+        self.data = data
+        
     def draw(self,surf):
         pass
     def render(self):
-        pass
+        '''_____________________
+           | 32   |   2   |  64  |
+           |______|_______|______|
+           | 16   |   1   |   4  |
+           |______|_______|______|
+           | 256  |   8   | 128  |
+           |______|_______|______|
+        '''
+            # if neighbors not walkable add constant based on data structure
     
 class struct_tile():
     def __init__(self, tile_number):
@@ -165,7 +175,8 @@ class obj_item(element):
 class actor(element):
     def move(self, dx, dy):
         try:
-            dest_tile = game_obj.scene_list[game_obj.vars["current_scene"]]["map"][self.y+dy][self.x+dx]
+##            dest_tile = game_obj.scene_list[game_obj.vars["current_scene"]]["map"][self.y+dy][self.x+dx]
+            dest_tile = game_obj.vars["current_scene"].data["map"][self.y+dy][self.x+dx]
             for t in game_obj.tile_list:
                 if t.serial_no == dest_tile:
                     break
@@ -272,7 +283,7 @@ class portal(prop):
             return(False)
 
     def travel(self,actor):
-        game_obj.change_scene(self.dest_scene,actor,self.dest_x,self.dest_y)
+        game_obj.change_scene(game_obj.scene_list[self.dest_scene],actor,self.dest_x,self.dest_y)
         
     def update(self):
         if self.prop_type == "door" and self.state == "closed":
@@ -293,7 +304,8 @@ class game_object():
                      "page":1,
                      "debug": False,
                      "turn": 0,
-                     "current_scene":0,
+##                     "current_scene":0,
+                     "current_scene":None,
                      "serial_number_counter":0,
                      "game_mode":"normal",
                      "mouse_attachment":None,
@@ -307,6 +319,7 @@ class game_object():
         actor.x = dest_x
         actor.y = dest_y
         actor.scene = new_scene
+        self.vars["current_scene"].render()
         
     def load(self):
         print("Loading tile data...")
@@ -324,13 +337,17 @@ class game_object():
         for i in range(len([f for f in os.listdir("scenes")])):
             path = "scenes\\" + str(i) + ".txt"
             with open(path,"r") as f:
-                self.scene_list.append(json.load(f))
+##                self.scene_list.append(json.load(f))
+                new_scene = scene(i,json.load(f))
+                self.scene_list.append(new_scene)
+                
+        self.change_scene(self.scene_list[0],self.actor_list[0],1,1)
 
     def save(self):
         for i in range(len([f for f in os.listdir("scenes")])):
             path = "scenes\\" + str(i) + ".txt"
             with open(path,"w") as f:
-                f.write(json.dumps(self.scene_list[i],indent=4))
+                f.write(json.dumps(self.scene_list[i].data,indent=4))
            
     def build_tables(self):
         self.currency_table = loot_table(constants.TABLE_CURRENCY)
@@ -418,7 +435,8 @@ class game_object():
     def get_props(self):
         self.prop_list = []
         
-        for p in self.scene_list[self.vars["current_scene"]]["props"]:
+##        for p in self.scene_list[self.vars["current_scene"]]["props"]:
+        for p in self.vars["current_scene"].data["props"]:
             if p["type"] == "chest":
                 inventory = []
                 for entry in p["inventory"]:

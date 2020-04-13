@@ -63,7 +63,8 @@ def draw_game():
     game_obj.SURFACE_MAIN.fill(constants.DEFAULT_BG)
 
     # Render the current scene
-    for y,row in enumerate(game_obj.scene_list[game_obj.vars["current_scene"]]["map"]):
+##    for y,row in enumerate(game_obj.scene_list[game_obj.vars["current_scene"]]["map"]):
+    for y,row in enumerate(game_obj.vars["current_scene"].data["map"]):
         for x,tile in enumerate(row):
             for t in game_obj.tile_list:
                 if t.serial_no == tile:
@@ -195,7 +196,8 @@ def game_main_loop():
 
                 if game_obj.vars["mouse_attachment"]:
                     try:
-                        game_obj.scene_list[game_obj.vars["current_scene"]]["map"][mouse_tile_y][mouse_tile_x] = game_obj.vars["mouse_attachment"].serial_no
+                        game_obj.vars["current_scene"].data["map"][mouse_tile_y][mouse_tile_x] = game_obj.vars["mouse_attachment"].serial_no
+##                        game_obj.scene_list[game_obj.vars["current_scene"]]["map"][mouse_tile_y][mouse_tile_x] = game_obj.vars["mouse_attachment"].serial_no
                     except AttributeError:
                         game_obj.log_message("Items do not have serial numbers.")
                     try:
@@ -226,12 +228,16 @@ def game_initialize():
 
     game_obj.SURFACE_MAIN = pygame.display.set_mode((constants.GAME_WIDTH,
                                             constants.GAME_HEIGHT))
-    game_obj.load()
+    
     game_obj.build_tables()
+    
+    game_obj.actor_list.append(actor(1,1,None,constants.S_PLAYER,player=True,name="Player",storage=component.storage()))
+    
 
-    game_obj.actor_list.append(actor(1,1,0,constants.S_PLAYER,player=True,name="Player",storage=component.storage()))
-    game_obj.actor_list.append(actor(15,15,0,constants.S_ENEMY,player=False,ai=component.simple_ai(),name="Enemy"))
-
+    game_obj.load()
+    
+    game_obj.actor_list.append(actor(15,15,game_obj.vars["current_scene"],constants.S_ENEMY,player=False,ai=component.simple_ai(),name="Enemy"))
+    
     game_obj.side_menu = side_menu(constants.SCENE_WIDTH,0,constants.SIDE_BAR_WIDTH,constants.GAME_HEIGHT)
 
     # Tell the following modules about game_obj
