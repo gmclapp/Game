@@ -104,6 +104,10 @@ class element():
             self.clicked = True
         else:
             self.clicked = False
+
+    def set_xy(self,x,y):
+        self.x = x
+        self.y = y
             
 class obj_item(element):
     def __init__(self, x,y, scene,serial_num, inst_name,sprite):
@@ -142,8 +146,8 @@ class obj_item(element):
             return(False)
 
     def set_xy(self,mx,my):
-        self.x = mx
-        self.y = my
+        self.x = mx/constants.RES
+        self.y = my/constants.RES
         
 class actor(element):
     def move(self, dx, dy):

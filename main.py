@@ -104,9 +104,10 @@ def draw_game():
 
     # Draw the mouse attachment if there is one.
     if game_obj.vars["mouse_attachment"]:
-        game_obj.SURFACE_MAIN.blit(game_obj.vars["mouse_attachment"].sprite,(game_obj.vars["mouse_attachment"].x,
-                                                                             game_obj.vars["mouse_attachment"].y))
-        
+##        game_obj.SURFACE_MAIN.blit(game_obj.vars["mouse_attachment"].sprite,(game_obj.vars["mouse_attachment"].x,
+##                                                                             game_obj.vars["mouse_attachment"].y))
+##        
+        game_obj.vars["mouse_attachment"].draw(game_obj.SURFACE_MAIN)
     # Flip the display to show the next frame
     pygame.display.flip()
 
@@ -195,7 +196,10 @@ def game_main_loop():
                 and 0 < left_click_y < constants.SCENE_HEIGHT):
 
                 if game_obj.vars["mouse_attachment"]:
-                    game_obj.log_message("{} is already attached to the mouse!".format(game_obj.vars["mouse_attachment"].inst_name))
+                    try:
+                        game_obj.log_message("{} is already attached to the mouse!".format(game_obj.vars["mouse_attachment"].inst_name))
+                    except AttributeError:
+                        game_obj.log_message("Tiles do not have inst_name")
                 else:
                     for a in game_obj.actor_list:
                         a.is_clicked(left_click_x,left_click_y)
