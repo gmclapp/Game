@@ -4,14 +4,14 @@
 	"sprite_id":0,
         "name":"cave floor",
         "block_path": false,
-        "art": "art\\cave_0.png"
+        "art": "art\\cave wall\\cave_0.png"
     },
     {
         "serial_no":1,
 	"sprite_id":1,
         "name":"cave wall",
         "block_path": true,
-        "art":"art\\cave_1.png"
+        "art":"art\\cave wall\\cave_1.png"
     },
     {
         "serial_no":2,

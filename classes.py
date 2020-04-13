@@ -36,7 +36,15 @@ class loot_table():
             if item["range_min"]<=result<=item["range_max"]:
                 return(item)
         print("Invalid roll!")
-            
+
+class scene():
+    def __init__(self):
+        pass
+    def draw(self,surf):
+        pass
+    def render(self):
+        pass
+    
 class struct_tile():
     def __init__(self, tile_number):
         self.serial_no = tile_number
@@ -58,6 +66,11 @@ class struct_tile():
         
     def draw(self, surf):
         surf.blit(self.art, (self.x, self.y))
+
+    def set_art(self,art_path):
+        ''' ex. 'art\\cave wall\\cave_0.png'
+        '''
+        self.art = art_path
             
 
 class element():
@@ -259,11 +272,7 @@ class portal(prop):
             return(False)
 
     def travel(self,actor):
-        game_obj.vars["current_scene"] = self.dest_scene
-        game_obj.get_props()
-        actor.x = self.dest_x
-        actor.y = self.dest_y
-        actor.scene = self.dest_scene
+        game_obj.change_scene(self.dest_scene,actor,self.dest_x,self.dest_y)
         
     def update(self):
         if self.prop_type == "door" and self.state == "closed":
@@ -292,7 +301,13 @@ class game_object():
                      "messages":["Hello world."]}
         self.player_inventory = component.storage(max_slots = 28)
         
-
+    def change_scene(self, new_scene, actor, dest_x, dest_y):
+        self.vars["current_scene"] = new_scene
+        self.get_props()
+        actor.x = dest_x
+        actor.y = dest_y
+        actor.scene = new_scene
+        
     def load(self):
         print("Loading tile data...")
         # Load the data which tells the game what art to render and what
