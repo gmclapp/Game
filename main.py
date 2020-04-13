@@ -197,6 +197,10 @@ def game_main_loop():
 
                 if game_obj.vars["mouse_attachment"]:
                     try:
+                        game_obj.scene_list[game_obj.vars["current_scene"]]["map"][mouse_tile_y][mouse_tile_x] = game_obj.vars["mouse_attachment"].serial_no
+                    except AttributeError:
+                        game_obj.log_message("Items do not have serial numbers.")
+                    try:
                         game_obj.log_message("{} is already attached to the mouse!".format(game_obj.vars["mouse_attachment"].inst_name))
                     except AttributeError:
                         game_obj.log_message("Tiles do not have inst_name")
