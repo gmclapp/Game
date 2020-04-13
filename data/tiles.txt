@@ -1,30 +1,35 @@
 [
     {
         "serial_no":0,
+	"sprite_id":0,
         "name":"cave floor",
         "block_path": false,
         "art": "art\\cave_floor.png"
     },
     {
         "serial_no":1,
+	"sprite_id":0,
         "name":"cave wall",
         "block_path": true,
         "art":"art\\cave_wall.png"
     },
     {
         "serial_no":5,
+	"sprite_id":0,
         "name":"dirt floor",
         "block_path": false,
         "art": "art\\dirt_floor.png"
     },
     {
         "serial_no":6,
+	"sprite_id":0,
         "name":"grass floor",
         "block_path": false,
         "art": "art\\grass_floor.png"
     },
     {
         "serial_no":7,
+	"sprite_id":0,
         "name":"lava floor",
         "block_path": true,
         "art": "art\\lava_floor.png"
