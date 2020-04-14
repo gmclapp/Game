@@ -133,6 +133,11 @@ class struct_tile():
                     self.name = t["name"]
                     self.block_path = t["block_path"]
                     self.art = pygame.image.load(t["art"])
+                    try:
+                        with open("art\\{}\\substitution dictionary.txt".format(self.name),"r") as f:
+                            self.sub_dict = json.load(f)
+                    except:
+                        pass
 
     def __str__(self):
         return(str(self.serial_no))
@@ -160,10 +165,8 @@ class struct_tile():
             raise
 
     def set_art(self):
-        with open("art\\{}\\substitution dictionary.txt".format(self.name),"r") as f:
-            sub_dict = json.load(f)
         try:
-            self.art = pygame.image.load("art\\{}\\cave_{}.png".format(self.name,str(sub_dict[str(self.sprite_id)])))
+            self.art = pygame.image.load("art\\{}\\cave_{}.png".format(self.name,str(self.sub_dict[str(self.sprite_id)])))
         except:
             self.art = pygame.image.load("art\\{}\\cave_0.png".format(self.name))
             print("({},{}) Sprite: {}".format(self.tx,self.ty,self.sprite_id))
