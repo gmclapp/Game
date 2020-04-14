@@ -160,10 +160,10 @@ class struct_tile():
             raise
 
     def set_art(self):
-        ''' ex. 'art\\cave wall\\cave_0.png'
-        '''
+        with open("art\\{}\\substitution dictionary.txt".format(self.name),"r") as f:
+            sub_dict = json.load(f)
         try:
-            self.art = pygame.image.load("art\\{}\\cave_{}.png".format(self.name,self.sprite_id))
+            self.art = pygame.image.load("art\\{}\\cave_{}.png".format(self.name,str(sub_dict[str(self.sprite_id)])))
         except:
             self.art = pygame.image.load("art\\{}\\cave_0.png".format(self.name))
             print("({},{}) Sprite: {}".format(self.tx,self.ty,self.sprite_id))
