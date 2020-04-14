@@ -67,7 +67,8 @@ class scene():
 
     def is_walkable(self,tx,ty):
         index = tx + ty*self.width
-        if index < 0 or index >= len(self.map):
+##        if index < 0 or index >= len(self.map):
+        if (tx < 0 or tx > self.width or ty < 0 or ty > self.height or index < 0 or index >= len(self.map)):
             return(False)
         else:
             return(self.map[index].is_walkable())
@@ -166,6 +167,9 @@ class struct_tile():
 
     def set_art(self):
         try:
+            ## Remove this refresh of the sub_dict after the substitution dictionary file is complete
+            with open("art\\{}\\substitution dictionary.txt".format(self.name),"r") as f:
+                self.sub_dict = json.load(f)
             self.art = pygame.image.load("art\\{}\\cave_{}.png".format(self.name,str(self.sub_dict[str(self.sprite_id)])))
         except:
             self.art = pygame.image.load("art\\{}\\cave_0.png".format(self.name))
