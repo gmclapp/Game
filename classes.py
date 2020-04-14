@@ -67,7 +67,10 @@ class scene():
 
     def is_walkable(self,tx,ty):
         index = tx + ty*self.width
-        return(self.map[index].is_walkable())
+        if index < 0 or index >= len(self.map):
+            return(False)
+        else:
+            return(self.map[index].is_walkable())
         
     def draw(self,surf):
         surf.blit(self.surf,(0,0))
@@ -81,6 +84,41 @@ class scene():
            | 256  |   8   | 128  |
            |______|_______|______|
         '''
+        
+        for t in self.map:
+            t.sprite_id = 0
+            if (not t.is_walkable() and t.name == 'cave wall'):
+                t.sprite_id += 1
+                if not self.is_walkable(t.tx-1,t.ty-1):
+                    # The tile to the NW is not walkable
+                    t.sprite_id += 32
+                if not self.is_walkable(t.tx,t.ty-1):
+                    # The tile to the N is not walkable
+                    t.sprite_id += 2
+                if not self.is_walkable(t.tx+1,t.ty-1):
+                    # The tile to the NE is not walkable
+                    t.sprite_id += 64
+                if not self.is_walkable(t.tx-1,t.ty):
+                    # The tile to the W is not walkable
+                    t.sprite_id += 16
+                if not self.is_walkable(t.tx+1,t.ty):
+                    # The tile to the E is not walkable
+                    t.sprite_id += 4
+                if not self.is_walkable(t.tx-1,t.ty+1):
+                    # The tile to the SW is not walkable
+                    t.sprite_id += 256
+                if not self.is_walkable(t.tx,t.ty+1):
+                    # The tile to the S is not walkable
+                    t.sprite_id += 8
+                if not self.is_walkable(t.tx+1,t.ty+1):
+                    # The tile to the SE is not walkable
+                    t.sprite_id += 128
+                t.set_art()
+            else:
+                pass
+
+        
+
         for t in self.map:
             t.draw(self.surf)
             # if neighbors not walkable add constant based on data structure
@@ -121,10 +159,14 @@ class struct_tile():
             print("X: {} Y: {} is an invalid destination for blit".format(self.x,self.y))
             raise
 
-    def set_art(self,art_path):
+    def set_art(self):
         ''' ex. 'art\\cave wall\\cave_0.png'
         '''
-        self.art = art_path
+        try:
+            self.art = pygame.image.load("art\\{}\\cave_{}.png".format(self.name,self.sprite_id))
+        except:
+            self.art = pygame.image.load("art\\{}\\cave_0.png".format(self.name))
+            print("({},{}) Sprite: {}".format(self.tx,self.ty,self.sprite_id))
 
     def is_walkable(self):
         return(not self.block_path)

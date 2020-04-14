@@ -31,7 +31,7 @@
         "serial_no":4,
 	"sprite_id":0,
         "name":"lava floor",
-        "block_path": true,
+        "block_path": false,
         "art": "art\\lava_floor.png"
     }
     
