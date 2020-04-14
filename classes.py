@@ -41,9 +41,37 @@ class scene():
     def __init__(self,num,data):
         self.num = num
         self.data = data
+        self.map = []
+        self.height = len(self.data["map"])
+        self.width = len(self.data["map"][0])
+        self.surf = pygame.Surface((self.width*constants.RES,self.height*constants.RES))
+
+        for y, row in enumerate(self.data["map"]):
+            temp_row = []
+            for x,ID in enumerate(row):
+                new_tile = struct_tile(ID)
+                new_tile.set_txty(x,y)
+                self.map.append(new_tile)
+
+    def change_tile(self,tx,ty,serial_no):
+        self.data["map"][ty][tx] = serial_no
+        new_tile = struct_tile(serial_no)
+        new_tile.set_txty(tx,ty)
+        index = tx + ty*self.width
+        self.map[index] = new_tile
+        self.render()
+
+    def get_tile(self,tx,ty):
+        index = tx + ty*self.width
+        return(self.map[index])
+
+    def is_walkable(self,tx,ty):
+        index = tx + ty*self.width
+        return(self.map[index].is_walkable())
         
     def draw(self,surf):
-        pass
+        surf.blit(self.surf,(0,0))
+            
     def render(self):
         '''_____________________
            | 32   |   2   |  64  |
@@ -53,6 +81,8 @@ class scene():
            | 256  |   8   | 128  |
            |______|_______|______|
         '''
+        for t in self.map:
+            t.draw(self.surf)
             # if neighbors not walkable add constant based on data structure
     
 class struct_tile():
@@ -66,6 +96,10 @@ class struct_tile():
                     self.block_path = t["block_path"]
                     self.art = pygame.image.load(t["art"])
 
+    def __str__(self):
+        return(str(self.serial_no))
+    
+
     def attach_to_mouse(self):
         game_obj.vars["mouse_attachment"] = self
         print("Attached {} to mouse.".format(self.name))
@@ -73,14 +107,27 @@ class struct_tile():
     def set_xy(self,x,y):
         self.x = x
         self.y = y
+
+    def set_txty(self,tx,ty):
+        self.tx = tx
+        self.ty = ty
+        self.x = tx*constants.RES
+        self.y = ty*constants.RES
         
     def draw(self, surf):
-        surf.blit(self.art, (self.x, self.y))
+        try:
+            surf.blit(self.art, (self.x, self.y))
+        except TypeError:
+            print("X: {} Y: {} is an invalid destination for blit".format(self.x,self.y))
+            raise
 
     def set_art(self,art_path):
         ''' ex. 'art\\cave wall\\cave_0.png'
         '''
         self.art = art_path
+
+    def is_walkable(self):
+        return(not self.block_path)
             
 
 class element():
@@ -175,14 +222,9 @@ class obj_item(element):
 class actor(element):
     def move(self, dx, dy):
         try:
-##            dest_tile = game_obj.scene_list[game_obj.vars["current_scene"]]["map"][self.y+dy][self.x+dx]
-            dest_tile = game_obj.vars["current_scene"].data["map"][self.y+dy][self.x+dx]
-            for t in game_obj.tile_list:
-                if t.serial_no == dest_tile:
-                    break
-                else:
-                    pass
-            if not t.block_path:
+            t = game_obj.vars["current_scene"].get_tile(self.x+dx,self.y+dy)
+            check = t.is_walkable()
+            if check:
                 self.x += dx
                 self.y += dy
                 return(True)
@@ -337,8 +379,8 @@ class game_object():
         for i in range(len([f for f in os.listdir("scenes")])):
             path = "scenes\\" + str(i) + ".txt"
             with open(path,"r") as f:
-##                self.scene_list.append(json.load(f))
                 new_scene = scene(i,json.load(f))
+                new_scene.render()
                 self.scene_list.append(new_scene)
                 
         self.change_scene(self.scene_list[0],self.actor_list[0],1,1)

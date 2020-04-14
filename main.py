@@ -62,13 +62,8 @@ def draw_game():
     # Background fill to erase previous frame
     game_obj.SURFACE_MAIN.fill(constants.DEFAULT_BG)
 
-    # Render the current scene
-##    for y,row in enumerate(game_obj.scene_list[game_obj.vars["current_scene"]]["map"]):
-    for y,row in enumerate(game_obj.vars["current_scene"].data["map"]):
-        for x,tile in enumerate(row):
-            for t in game_obj.tile_list:
-                if t.serial_no == tile:
-                    game_obj.SURFACE_MAIN.blit(t.art,(x*constants.RES,y*constants.RES))
+    # Draw the current scene
+    game_obj.vars["current_scene"].draw(game_obj.SURFACE_MAIN)
 
     # Draw the side bar menu
     game_obj.side_menu.draw(game_obj.SURFACE_MAIN)
@@ -196,8 +191,7 @@ def game_main_loop():
 
                 if game_obj.vars["mouse_attachment"]:
                     try:
-                        game_obj.vars["current_scene"].data["map"][mouse_tile_y][mouse_tile_x] = game_obj.vars["mouse_attachment"].serial_no
-##                        game_obj.scene_list[game_obj.vars["current_scene"]]["map"][mouse_tile_y][mouse_tile_x] = game_obj.vars["mouse_attachment"].serial_no
+                        game_obj.vars["current_scene"].change_tile(mouse_tile_x,mouse_tile_y,game_obj.vars["mouse_attachment"].serial_no)
                     except AttributeError:
                         game_obj.log_message("Items do not have serial numbers.")
                     try:
